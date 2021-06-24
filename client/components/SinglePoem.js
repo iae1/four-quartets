@@ -2,7 +2,8 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { fetchSinglePoem } from "../store/poems";
 import Note from "./NoteBox";
-import Genius from "genius-lyrics";
+import Line from "./Line"
+import axios from "axios";
 
 class SinglePoem extends Component {
   constructor() {
@@ -23,27 +24,10 @@ class SinglePoem extends Component {
 
   async componentDidMount() {
     const id = this.props.match.params.id;
-    const title = id
-      .split("-")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-
-    const Client = new Genius.Client(
-      "2zmtmacvIEj-UMibtaxqNf4NrP6MbPdnvlh-uJ0vnM9C58wW7mh5PSl-YiMg-1PB"
-    );
-    const searches = await Client.songs.search(`Four Quartets: ${title}`);
-
-    // Pick first one
-    const firstSong = searches[0];
-    console.log("About the Song:\n", firstSong, "\n");
-
-    // Ok lets get the lyrics
-    const lyrics = await firstSong.lyrics();
-    console.log("Lyrics of the Song:\n", lyrics, "\n");
-    const artist = await Client.artists.get(742);
-    console.log("About the Artist:\n", artist, "\n");
-    this.setState({ lyrics, song: firstSong });
+    const lyrics = await axios.get(`/api/poems/${id}`)
+    this.setState({ lyrics: lyrics.data });
   }
+
   selectText(e) {
     const selection = document.getSelection().toString();
     if (selection.length > 0) {
@@ -75,7 +59,9 @@ class SinglePoem extends Component {
       left: `${x}px`,
       top: `${y + 20}px`
     };
-    console.log(lyrics.split("\n"));
+
+    let initCharIdx = 0;
+    let endCharIdx = 0;
     return (
       <>
         <div className="single-poem">
@@ -86,7 +72,12 @@ class SinglePoem extends Component {
               <h1>{title}</h1>
               <h3>By T.S. Eliot</h3>
               <p id="poem" onMouseUp={e => this.selectText(e)}>
-                {lyrics.split("\n").map((l, i, array) => {
+                {
+                  lyrics.split("\n").map((l, i, array) => {
+                    initCharIdx += endCharIdx
+                    endCharIdx += l.length 
+                    return <Line key={i} line={l} initCharIdx={initCharIdx} endCharIdx={endCharIdx} />
+                  /*
                   if (
                     i < array.length - 1 &&
                     array[i].length > 0 &&
@@ -110,7 +101,7 @@ class SinglePoem extends Component {
                       </Fragment>
                     );
                   }
-                })}
+                */})}
               </p>
               {showAnnotateBtn ? (
                 <button
