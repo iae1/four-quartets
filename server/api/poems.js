@@ -1,4 +1,7 @@
 const router = require("express").Router();
+const Genius = require("genius-lyrics");
+const Client = new Genius.Client("2zmtmacvIEj-UMibtaxqNf4NrP6MbPdnvlh-uJ0vnM9C58wW7mh5PSl-YiMg-1PB"); // Scrapes if no key is provided
+
 const { models: { Poem, Annotation, Line } } = require("../db");
 const {
   requireToken,
@@ -19,19 +22,34 @@ router.get("/", async (req, res, next) => {
 
 // GET single poem including their lines w/ annotations /api/poems/:id
 router.get("/:id", async (req, res, next) => {
+  
   try {
-    const poem = await Poem.findByPk(req.params.id, {
-      include: {
-        model: Line,
-        include: { model: Annotation }
-      }
-    });
-    // const sortedPoem =
-    poem.lines.sort((a, b) => a.number - b.number);
-    res.json(poem);
-  } catch (err) {
-    next(err);
+    const title = req.params.id
+      .split("-")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+    const searches = await Client.songs.search(`Four Quartets: ${title}`);
+    const firstSong = searches[0];
+    const lyrics = await firstSong.lyrics();
+
+    res.json(lyrics)
+  } catch (error) {
+    next(error)
   }
+  
+  // try {
+  //   const poem = await Poem.findByPk(req.params.id, {
+  //     include: {
+  //       model: Line,
+  //       include: { model: Annotation }
+  //     }
+  //   });
+  //   // const sortedPoem =
+  //   poem.lines.sort((a, b) => a.number - b.number);
+  //   res.json(poem);
+  // } catch (err) {
+  //   next(err);
+  // }
 });
 
 // POST poems /api/poems/
