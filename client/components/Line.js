@@ -10,7 +10,7 @@ class Line extends React.Component {
         console.log('initCharIdx->', this.props.initCharIdx)
         console.log('endCharIdx->', this.props.endCharIdx)
         return (
-            <><span>{line}</span><br/></>
+            <><span className="poem-line">{line}</span><br/></>
         )
     }
 }

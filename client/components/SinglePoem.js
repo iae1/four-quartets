@@ -66,12 +66,12 @@ class SinglePoem extends Component {
       <>
         <div className="single-poem">
           {!lyrics ? (
-            <h3>Loading Poem</h3>
+            <h3 className="loading-poem">Loading Poem</h3>
           ) : (
-            <div>
+            <div className="loaded-poem">
               <h1>{title}</h1>
               <h3>By T.S. Eliot</h3>
-              <p id="poem" onMouseUp={e => this.selectText(e)}>
+              <div id="poem-lines" onMouseUp={e => this.selectText(e)}>
                 {
                   lyrics.split("\n").map((l, i, array) => {
                     initCharIdx += endCharIdx
@@ -102,7 +102,7 @@ class SinglePoem extends Component {
                     );
                   }
                 */})}
-              </p>
+              </div>
               {showAnnotateBtn ? (
                 <button
                   style={btnStyle}
