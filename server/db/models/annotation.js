@@ -8,9 +8,20 @@ const Annotation = db.define("annotation", {
     autoIncrement: true,
     allowNull: false
   },
+  poem: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   content: {
     type: Sequelize.TEXT,
     allowNull: false
+  },
+  linesAnnotated: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    validate: {
+      min: 5
+    }
   },
   charStart: {
     type: Sequelize.INTEGER
