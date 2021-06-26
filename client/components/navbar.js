@@ -5,12 +5,7 @@ import { logout } from "../store";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div className="navigation">
-    <input type="checkbox" className="navigation__checkbox" id="navi-toggle" />
-
-    <label htmlFor="navi-toggle" className="navigation__button">
-      <span className="navigation__icon">&nbsp;</span>
-    </label>
-
+    
     <div className="navigation__background">&nbsp;</div>
     <nav className="navigation__nav">
       {isLoggedIn ? (
@@ -31,7 +26,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             Home
           </Link>
           <Link to="/poems" className="navigation__link">
-            Poems
+            The Quartets
           </Link>
           <Link to="/login" className="navigation__link">
             Login

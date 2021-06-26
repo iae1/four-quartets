@@ -50,10 +50,25 @@ form div {
 
 .loaded-poem {
   margin: 8rem;
+  white-space: nowrap;
 }
 
 .poem-line {
   font-size: 1.5rem;
 }
 
+/* .navigation__background {
+  background-color: #5f5980;
+} */
+.navigation__nav {
+  background-color: #5f5980;
 
+}
+.navigation__link {
+  color: gainsboro;
+}
+
+.navigation__link:hover {
+  background-color: gainsboro;
+  color: #343434
+}
