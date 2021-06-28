@@ -313,14 +313,20 @@ const users = [
 // ]
 
 const annotations = [
+  // {
+  //   poem: "Burnt Norton",
+  //   content: "'The way up and the way down are one and the same",
+  //   linesAnnotated: "ὁδὸς ἄνω κάτω μία καὶ ὡυτή\nI. p. 89 Fr. 60.",
+  // },
   {
-    id: 1,
-    lineId: 1,
-    userId: 1,
-    content:
-      'Time present: _The Cloud of Unknowing_ ch.4: "time is precious: for God, that is the giver of time, giveth never two times together, but each one after other" (scored in TSE\'s copy). Lancelot Andrews: "when all is done, we shallhave somewhat to do, to bring this to a Nunc, to a time present... Now, is the only sure part of our time. That which is past, is come and gone. That which is to come, may peradventure, never come", Ash-Wednesday Sermon 1619. TSE: "reason counsels us to avoid surrenduring ourselves either to a present which is already past or to a future which is unknown',
-    charStart: 0,
-    charEnd: 12
+    poem: "Burnt Norton",
+    content: "Heraclitus was a pre-Socratic philosopher known for his cryptic aphorisms",
+    linesAnnotated: "Herakleitos"
+  },
+  {
+    poem: "Burnt Norton",
+    content: "The opening lines of the poem are about time",
+    linesAnnotated: "Time present and time past\nAre both perhaps present in time future"
   }
 ];
 
@@ -328,30 +334,34 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  // Creating users in order (not very efficient, but this guarantees that they have expected ids)
-  for (let user of users) {
-    await User.create(user);
+  // // Creating users in order (not very efficient, but this guarantees that they have expected ids)
+  // for (let user of users) {
+  //   await User.create(user);
+  // }
+
+  // // Creating Products in order (not very efficient, but this guarantees that they have expected ids)
+  // for (let poem of poems) {
+  //   await Poem.create(poem);
+  // }
+
+  // // Creating Orders in order (not very efficient, but this guarantees that they have expected ids)
+  // for (let line of lines) {
+  //   await Line.create(line);
+  // }
+
+  // // Creating OrdersDetails in order (not very efficient, but this guarantees that they have expected ids)
+  // await Promise.all(
+  //   annotations.map(annotation => {
+  //     return Annotation.create(annotation);
+  //   })
+  // );
+
+  for (let annotation of annotations) {
+    await Annotation.create(annotation)
   }
 
-  // Creating Products in order (not very efficient, but this guarantees that they have expected ids)
-  for (let poem of poems) {
-    await Poem.create(poem);
-  }
-
-  // Creating Orders in order (not very efficient, but this guarantees that they have expected ids)
-  for (let line of lines) {
-    await Line.create(line);
-  }
-
-  // Creating OrdersDetails in order (not very efficient, but this guarantees that they have expected ids)
-  await Promise.all(
-    annotations.map(annotation => {
-      return Annotation.create(annotation);
-    })
-  );
-
-  console.log(`seeded ${lines.length} lines`);
-  console.log(`seeded ${poems.length} poems`);
+  // console.log(`seeded ${lines.length} lines`);
+  // console.log(`seeded ${poems.length} poems`);
   console.log(`seeded ${annotations.length} annotations`);
   console.log(`seeded successfully`);
   return {
