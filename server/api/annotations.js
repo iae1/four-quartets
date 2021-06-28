@@ -8,9 +8,12 @@ module.exports = router;
 
 router.get('/:poemId', async (req, res, next) => {
     try {
+        const poemName = req.params.poemId.split("-")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
         const allPoemAnnotations = await Annotation.findAll({
             where: {
-                poem: req.params.poemId
+                poem: poemName
             }
         })
         res.json(allPoemAnnotations)
