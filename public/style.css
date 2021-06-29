@@ -24,6 +24,11 @@ body {
   align-items: center;
 }
 
+.heading-primary-sub {
+  font-style: italic;
+}
+
+
 a {
   text-decoration: none;
 }
@@ -35,6 +40,8 @@ label {
 nav a {
   display: inline-block;
   margin: 1em;
+  font-weight: bold;
+  padding: 0.5rem;
 }
 
 form div {
@@ -53,8 +60,9 @@ form div {
   white-space: nowrap;
 }
 
-.poem-line {
+#poem-lines {
   font-size: 1.5rem;
+  white-space: pre-line;
 }
 
 /* .navigation__background {
@@ -66,9 +74,29 @@ form div {
 }
 .navigation__link {
   color: gainsboro;
+  font: 400;
+  font-size: 1rem;
 }
 
 .navigation__link:hover {
   background-color: gainsboro;
   color: #343434
+}
+
+.poem-link a {
+  color: gainsboro;
+  font-size: 1.5rem;
+}
+
+.poem-link a:hover {
+  color: #343434;
+  padding: 1rem;
+}
+
+.annotated-text {
+  background-color: turquoise;
+}
+
+.annotated-text:hover {
+  background-color: #14aaaa;
 }
