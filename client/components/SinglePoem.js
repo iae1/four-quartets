@@ -30,9 +30,9 @@ class SinglePoem extends Component {
     const lyrics = await axios.get(`/api/poems/${id}`)
 
     // Get all annotations that have been made on this poem from DB
-    // const annotations = await axios.get(`/api/annotations/${id}`)
+    const annotations = await axios.get(`/api/annotations/${id}`)
 
-    this.setState({ lyrics: lyrics.data, /*annotations: annotations.data*/ });
+    this.setState({ lyrics: lyrics.data, annotations: annotations.data });
   }
 
   selectText(e) {
@@ -48,14 +48,17 @@ class SinglePoem extends Component {
       this.setState({ selection, showAnnotateBtn: false });
     }
   }
+
   render() {
     const {
       lyrics,
       showAnnotateBtn,
       mouseCoordinates: { x, y },
       showNoteCpt,
-      selection
+      selection,
+      annotations
     } = this.state;
+
     const title = this.props.match.params.id
       .split("-")
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -67,8 +70,20 @@ class SinglePoem extends Component {
       top: `${y + 20}px`
     };
 
-    let initCharIdx = 0;
-    let endCharIdx = 0;
+    let theLyrics = lyrics.slice()
+
+    if (theLyrics && annotations) {
+      annotations.forEach((annotation) => {
+        theLyrics = theLyrics.replace(annotation.linesAnnotated, `<span class="annotated-text">${annotation.linesAnnotated}</span>`)
+        // const begIdx = theLyrics.indexOf(annotation.linesAnnotated)
+          // theLyrics[begIdx + annotation.linesAnnotated] = '</span>'
+          // theLyrics[begIdx] = '<span class="annotated-text">'
+          // console.log('begIdx--->', begIdx)
+          // console.log('annotation--->', annotation)
+      })
+      console.log('lyrocs---->', theLyrics)
+    }
+    
     return (
       <>
         <div className="single-poem">
@@ -78,12 +93,16 @@ class SinglePoem extends Component {
             <div className="loaded-poem">
               <h1>{title}</h1>
               <h3>By T.S. Eliot</h3>
-              <div id="poem-lines" onMouseUp={e => this.selectText(e)}>
+              <div id="poem-lines" dangerouslySetInnerHTML={{__html: theLyrics}} onMouseUp={e => this.selectText(e)}>
                 {
-                  lyrics.split("\n").map((l, i, array) => {
-                    initCharIdx += endCharIdx
-                    endCharIdx += l.length 
-                    return <Line key={i} line={l} initCharIdx={initCharIdx} endCharIdx={endCharIdx} />
+                  
+
+                  
+    
+                  // .split("\n").map((l, i, array) => {
+                  //   initCharIdx += endCharIdx
+                  //   endCharIdx += l.length 
+                  //   return <Line key={i} line={l} initCharIdx={initCharIdx} endCharIdx={endCharIdx} />
                   /*
                   if (
                     i < array.length - 1 &&
@@ -108,7 +127,7 @@ class SinglePoem extends Component {
                       </Fragment>
                     );
                   }
-                */})}
+                */}
               </div>
               {showAnnotateBtn ? (
                 <button
