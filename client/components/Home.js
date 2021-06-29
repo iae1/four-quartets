@@ -24,7 +24,7 @@ const Home = props => {
     <img className="opening-image" src="./assets/burnt-norton.jpg" />
     <img className="opening-image" src="./assets/east-coker.jpg" />
     <img className="opening-image" src="./assets/dry-salvages.jpg" />
-    <img className="opening-image"src="./assets/little-gidding.jpg" />
+    <img className="opening-image" src="./assets/little-gidding.jpg" />
     </>
   );
 };
