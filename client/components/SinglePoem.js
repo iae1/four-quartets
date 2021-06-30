@@ -4,6 +4,8 @@ import { fetchSinglePoem } from "../store/poems";
 import Note from "./NoteBox";
 import Line from "./Line"
 import axios from "axios";
+import Player from "./Player"
+import PopupNoteBox from "./PopupNoteBox"
 
 class SinglePoem extends Component {
   constructor() {
@@ -18,9 +20,11 @@ class SinglePoem extends Component {
       lyrics: "",
       annotations: {},
       showAnnotateBtn: false,
-      showNoteCpt: false
+      showNoteCpt: false,
+      rendered: false,
     };
     this.selectText = this.selectText.bind(this);
+    this.openAnnotation = this.openAnnotation.bind(this)
   }
 
   async componentDidMount() {
@@ -49,6 +53,10 @@ class SinglePoem extends Component {
     }
   }
 
+  openAnnotation(annotation) {
+    console.log(annotation)
+  }
+
   render() {
     const {
       lyrics,
@@ -56,7 +64,8 @@ class SinglePoem extends Component {
       mouseCoordinates: { x, y },
       showNoteCpt,
       selection,
-      annotations
+      annotations,
+      rendered
     } = this.state;
 
     const title = this.props.match.params.id
@@ -71,17 +80,16 @@ class SinglePoem extends Component {
     };
 
     let theLyrics = lyrics.slice()
+    
 
     if (theLyrics && annotations) {
       annotations.forEach((annotation) => {
-        theLyrics = theLyrics.replace(annotation.linesAnnotated, `<span class="annotated-text">${annotation.linesAnnotated}</span>`)
-        // const begIdx = theLyrics.indexOf(annotation.linesAnnotated)
-          // theLyrics[begIdx + annotation.linesAnnotated] = '</span>'
-          // theLyrics[begIdx] = '<span class="annotated-text">'
-          // console.log('begIdx--->', begIdx)
-          // console.log('annotation--->', annotation)
+        theLyrics = theLyrics.replace(annotation.linesAnnotated, `
+          <span class="annotated-text" id="annotation-${annotation.id}" onclick="${annotation.content}">
+            ${annotation.linesAnnotated}
+          </span>`)
       })
-      console.log('lyrocs---->', theLyrics)
+      // this.setState({rendered: true})
     }
     
     return (
@@ -96,9 +104,8 @@ class SinglePoem extends Component {
               <div id="poem-lines" dangerouslySetInnerHTML={{__html: theLyrics}} onMouseUp={e => this.selectText(e)}>
                 {
                   
-
                   
-    
+                  
                   // .split("\n").map((l, i, array) => {
                   //   initCharIdx += endCharIdx
                   //   endCharIdx += l.length 
@@ -129,7 +136,10 @@ class SinglePoem extends Component {
                   }
                 */}
               </div>
-              {showAnnotateBtn ? (
+              {
+                showAnnotateBtn ? <PopupNoteBox style={btnStyle} selectedText={selection} /> : null
+              }
+              {/* {showAnnotateBtn ? (
                 <button
                   style={btnStyle}
                   onClick={() =>
@@ -138,11 +148,12 @@ class SinglePoem extends Component {
                 >
                   annotate
                 </button>
-              ) : null}
+              ) : null} */}
             </div>
           )}
         </div>
-        {showNoteCpt ? <Note selectedText={selection} /> : null}
+        {/* {showNoteCpt ? <Note selectedText={selection} /> : null} */}
+        <Player trackName={this.props.match.params.id} />
       </>
     );
   }
