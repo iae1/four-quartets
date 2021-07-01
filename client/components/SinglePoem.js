@@ -137,7 +137,7 @@ class SinglePoem extends Component {
                 */}
               </div>
               {
-                showAnnotateBtn ? <PopupNoteBox style={btnStyle} selectedText={selection} /> : null
+                showAnnotateBtn ? <PopupNoteBox style={btnStyle} selectedText={selection} poemName={this.props.match.params.id} /> : null
               }
               {/* {showAnnotateBtn ? (
                 <button
