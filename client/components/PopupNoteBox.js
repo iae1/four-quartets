@@ -1,50 +1,6 @@
 import React, {Component} from "react";
 import Popup from "reactjs-popup";
 import axios from "axios"
-// import 'reactjs-popup/dist/index.css';
-
-// const PopupNoteBox = ({ style, selectedText }) => {
-
-//   return (
-//     <Popup trigger={<button style={style}>Annotate</button>} modal nested>
-//       {(close) => (
-//         <div className="modal">
-//           <button className="close" onClick={close}>
-//             &times;
-//           </button>
-//           <div className="header"> Annotate Below </div>
-//           <div className="content">
-//             {/* {" "} */}
-//             {selectedText}
-//           </div>
-//           <div className="actions">
-//             <Popup
-//               trigger={<button className="button"> Trigger </button>}
-//               position="top center"
-//               nested
-//             >
-//               <span>
-//                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
-//                 magni omnis delectus nemo, maxime molestiae dolorem numquam
-//                 mollitia, voluptate ea, accusamus excepturi deleniti ratione
-//                 sapiente! Laudantium, aperiam doloribus. Odit, aut.
-//               </span>
-//             </Popup>
-//             <button
-//               className="button"
-//               onClick={() => {
-//                 console.log("modal closed ");
-//                 close();
-//               }}
-//             >
-//               close modal
-//             </button>
-//           </div>
-//         </div>
-//       )}
-//     </Popup>
-//   );
-// };
 
 class PopupNoteBox extends Component {
     constructor() {
@@ -53,7 +9,7 @@ class PopupNoteBox extends Component {
             noteContent: ""
         }
         this.handleChange = this.handleChange.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(e) {
@@ -63,18 +19,19 @@ class PopupNoteBox extends Component {
     }
 
     async handleSubmit(e) {
-        const {poemName, selectedText} = this.props
+        e.preventDefault()
+        console.log('noteProps', this.props)
+        const {poemName, selectedText, closeNote} = this.props
         const {noteContent} = this.state
-
-        await axios.post(`/api/${poemName}`, {noteContent, selectedText})
-
+        closeNote()
+        await axios.post(`/api/annotations/${poemName}`, {noteContent, selectedText})
     }
 
     render () {
         const { style, selectedText, poemName } = this.props
-        console.log(this)
+
         return (
-            <Popup trigger={<button style={style}>Annotate</button>} modal nested >
+            <Popup trigger={<button style={style}> Annotate </button>} modal nested >
             {(close) => (
                 <>
                 <div className="modal">
@@ -83,7 +40,6 @@ class PopupNoteBox extends Component {
                     </button>
                 <div className="header"> Annotate Below </div>
                     <div className="content">
-                        {/* {" "} */}
                         {selectedText}
                     </div>
                 </div>
@@ -101,7 +57,7 @@ class PopupNoteBox extends Component {
                         />
                     </div>
                     <div className="form__group">
-                        <button type="submit" className="btn btn--green">
+                        <button type="submit" className="btn btn--green" onClick={this.handleSubmit}>
                         Submit
                         </button>
                     </div>
@@ -109,7 +65,6 @@ class PopupNoteBox extends Component {
             </div>
             </>
             )}
-            
             </Popup>
         )
     }
