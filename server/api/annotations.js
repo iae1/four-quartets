@@ -29,7 +29,7 @@ router.post('/:poemId', async (req, res, next) => {
         .join(" ");
         const {noteContent, selectedText} = req.body
         const newAnnotation = await Annotation.create({poem, content: noteContent, linesAnnotated: selectedText })
-        res.status(201).json(newAnnotation)
+        res.status(201)
     } catch (error) {
         next(error)
     }
