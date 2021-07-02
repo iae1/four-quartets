@@ -6,6 +6,11 @@ import Line from "./Line"
 import axios from "axios";
 import Player from "./Player"
 import PopupNoteBox from "./PopupNoteBox"
+import {findAll} from  "highlight-words-core"
+import reactStringReplace from 'react-string-replace';
+import Annotation from "./Annotation"
+const replace = require('string-replace-to-array')
+
 
 class SinglePoem extends Component {
   constructor() {
@@ -20,11 +25,11 @@ class SinglePoem extends Component {
       lyrics: "",
       annotations: {},
       showAnnotateBtn: false,
-      showNoteCpt: false,
       rendered: false,
     };
     this.selectText = this.selectText.bind(this);
     this.openAnnotation = this.openAnnotation.bind(this)
+    this.closeNoteCpt = this.closeNoteCpt.bind(this)
   }
 
   async componentDidMount() {
@@ -47,7 +52,6 @@ class SinglePoem extends Component {
         mouseCoordinates: { x: e.pageX, y: e.pageY },
         showAnnotateBtn: true
       });
-      console.log(this.state);
     } else {
       this.setState({ selection, showAnnotateBtn: false });
     }
@@ -57,12 +61,15 @@ class SinglePoem extends Component {
     console.log(annotation)
   }
 
+  closeNoteCpt() {
+    this.setState({showAnnotateBtn: false})
+  }
+
   render() {
     const {
       lyrics,
       showAnnotateBtn,
       mouseCoordinates: { x, y },
-      showNoteCpt,
       selection,
       annotations,
       rendered
@@ -80,15 +87,42 @@ class SinglePoem extends Component {
     };
 
     let theLyrics = lyrics.slice()
-    
+    let result;
 
     if (theLyrics && annotations) {
-      annotations.forEach((annotation) => {
-        theLyrics = theLyrics.replace(annotation.linesAnnotated, `
-          <span class="annotated-text" id="annotation-${annotation.id}" onclick="${annotation.content}">
-            ${annotation.linesAnnotated}
-          </span>`)
+
+      // theLyrics = reactStringReplace(theLyrics, "Herakleitos", (match, i) => 
+      //     <Annotation key={match + i} match={match} comment={annotations[1].comment} />
+      //     // <span key={i} style={{ color: 'red' }}>{match}</span>
+      //     )
+      // theLyrics.join('')
+      const words = ['time', 'Herakleitos', 'ζώουσιν']
+      // result = reactStringReplace(theLyrics, words[0], (match, i) => 
+      //     (<Annotation key={match + i} match={words[0]} comment={'annotation.comment'} />)
+      //     )
+
+      words.forEach((word) => {
+        // replace(theLyrics, word, function() {
+        //   return <Annotation key={match + i} match={word} comment={'annotation.comment'} />
+        // })
+        result = reactStringReplace(theLyrics, word, (match, i) => 
+          (<Annotation key={match + i} match={word} comment={'annotation.comment'} />)
+          )
+          
       })
+
+      console.log('result', result)
+      // theLyrics.join('')
+      
+      
+
+      // annotations.forEach((annotation) => {
+      //   const lineAnnotated = new RegExp(annotation.lineAnnotated, 'g')
+      //   theLyrics = reactStringReplace(theLyrics, new RegExp(annotation.lineAnnotated, 'gi'), (match, i) => 
+      //     <Annotation key={match + i} match={match} comment={annotation.comment} />
+      //     // <span key={i} style={{ color: 'red' }}>{match}</span>
+      //     )
+      // })
       // this.setState({rendered: true})
     }
     
@@ -101,9 +135,9 @@ class SinglePoem extends Component {
             <div className="loaded-poem">
               <h1>{title}</h1>
               <h3>By T.S. Eliot</h3>
-              <div id="poem-lines" dangerouslySetInnerHTML={{__html: theLyrics}} onMouseUp={e => this.selectText(e)}>
+              <div id="poem-lines" onMouseUp={e => this.selectText(e)}>
                 {
-                  
+                  result
                   
                   
                   // .split("\n").map((l, i, array) => {
@@ -137,22 +171,11 @@ class SinglePoem extends Component {
                 */}
               </div>
               {
-                showAnnotateBtn ? <PopupNoteBox style={btnStyle} selectedText={selection} poemName={this.props.match.params.id} /> : null
+                showAnnotateBtn ? <PopupNoteBox style={btnStyle} selectedText={selection} poemName={this.props.match.params.id} closeNote={this.closeNoteCpt}/> : null
               }
-              {/* {showAnnotateBtn ? (
-                <button
-                  style={btnStyle}
-                  onClick={() =>
-                    this.setState({ showNoteCpt: true, showAnnotateBtn: false })
-                  }
-                >
-                  annotate
-                </button>
-              ) : null} */}
             </div>
           )}
         </div>
-        {/* {showNoteCpt ? <Note selectedText={selection} /> : null} */}
         <Player trackName={this.props.match.params.id} />
       </>
     );
