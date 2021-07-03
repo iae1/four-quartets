@@ -101,13 +101,20 @@ class SinglePoem extends Component {
       //     (<Annotation key={match + i} match={words[0]} comment={'annotation.comment'} />)
       //     )
 
-      words.forEach((word) => {
+      annotations.forEach((annotation, idx) => {
         // replace(theLyrics, word, function() {
         //   return <Annotation key={match + i} match={word} comment={'annotation.comment'} />
         // })
-        result = reactStringReplace(theLyrics, word, (match, i) => 
-          (<Annotation key={match + i} match={word} comment={'annotation.comment'} />)
+        if (idx > 0) {
+          result = reactStringReplace(result, annotation.linesAnnotated, (match, i) => 
+          (<Annotation key={match + i} match={annotation.linesAnnotated} comment={annotation.comment} />)
           )
+        } else {
+          result = reactStringReplace(theLyrics, annotation.linesAnnotated, (match, i) => 
+          (<Annotation key={match + i} match={annotation.linesAnnotated} comment={annotation.comment} />)
+          )
+        }
+        
           
       })
 
