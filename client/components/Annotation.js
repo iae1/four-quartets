@@ -8,7 +8,6 @@ class Annotation extends Component {
 
     render() {
         const { match, comment, image } = this.props
-        
         return (
             <Popup trigger={< span className="annotated-text">{match}</ span >} modal nested >
                 {(close) => (
@@ -17,13 +16,14 @@ class Annotation extends Component {
                             <button className="close" onClick={close}>
                                 &times;
                             </button>
-                        <div className="header"> Commentary on Annotated Lines </div>
-                            <div className="lines-annotated">
+                        <div className="note-header"> Commentary on Annotated Lines </div>
+                            <div className="content">
                                 {match}
                             </div>
-                        </div>
-                        <div className="commentary">
-                            {comment}
+                            <hr />
+                            <div className="commentary">
+                                {comment}
+                            </div>
                         </div>
                     </>
                 )}
