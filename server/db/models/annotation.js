@@ -8,7 +8,10 @@ const Annotation = db.define("annotation", {
   },
   content: {
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      min: 1
+    }
   },
   linesAnnotated: {
     type: Sequelize.TEXT,
