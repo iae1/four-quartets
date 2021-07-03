@@ -23,12 +23,11 @@ class SinglePoem extends Component {
       },
       song: {},
       lyrics: "",
-      annotations: {},
+      annotations: [],
       showAnnotateBtn: false,
       rendered: false,
     };
     this.selectText = this.selectText.bind(this);
-    this.openAnnotation = this.openAnnotation.bind(this)
     this.closeNoteCpt = this.closeNoteCpt.bind(this)
   }
 
@@ -57,12 +56,11 @@ class SinglePoem extends Component {
     }
   }
 
-  openAnnotation(annotation) {
-    console.log(annotation)
-  }
-
-  closeNoteCpt() {
-    this.setState({showAnnotateBtn: false})
+  closeNoteCpt(newAnnotation) {
+    const {annotations} = this.state
+    let newAnnotations = annotations.slice()
+    newAnnotations.push(newAnnotation)
+    this.setState({showAnnotateBtn: false, annotations: newAnnotations })
   }
 
   render() {
@@ -92,14 +90,14 @@ class SinglePoem extends Component {
     if (theLyrics && annotations) {
 
       annotations.forEach((annotation, idx) => {
-  
+        console.log(annotation)
         if (idx > 0) {
           result = reactStringReplace(result, annotation.linesAnnotated, (match, i) => 
-          (<Annotation key={match + i} match={annotation.linesAnnotated} comment={annotation.comment} />)
+          (<Annotation key={annotation.id} match={annotation.linesAnnotated} comment={annotation.content} />)
           )
         } else {
           result = reactStringReplace(theLyrics, annotation.linesAnnotated, (match, i) => 
-          (<Annotation key={match + i} match={annotation.linesAnnotated} comment={annotation.comment} />)
+          (<Annotation key={annotation.id} match={annotation.linesAnnotated} comment={annotation.content} />)
           )
         }      
           
@@ -110,7 +108,8 @@ class SinglePoem extends Component {
       <>
         <div className="single-poem">
           {!lyrics ? (
-            <h3 className="loading-poem">Loading Poem</h3>
+            // <h3 className="loading-poem">Loading Poem</h3>
+            <div class="lds-hourglass"></div>
           ) : (
             <div className="loaded-poem">
               <h1>{title}</h1>
