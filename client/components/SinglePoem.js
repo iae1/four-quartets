@@ -91,20 +91,8 @@ class SinglePoem extends Component {
 
     if (theLyrics && annotations) {
 
-      // theLyrics = reactStringReplace(theLyrics, "Herakleitos", (match, i) => 
-      //     <Annotation key={match + i} match={match} comment={annotations[1].comment} />
-      //     // <span key={i} style={{ color: 'red' }}>{match}</span>
-      //     )
-      // theLyrics.join('')
-      const words = ['time', 'Herakleitos', 'ζώουσιν']
-      // result = reactStringReplace(theLyrics, words[0], (match, i) => 
-      //     (<Annotation key={match + i} match={words[0]} comment={'annotation.comment'} />)
-      //     )
-
       annotations.forEach((annotation, idx) => {
-        // replace(theLyrics, word, function() {
-        //   return <Annotation key={match + i} match={word} comment={'annotation.comment'} />
-        // })
+  
         if (idx > 0) {
           result = reactStringReplace(result, annotation.linesAnnotated, (match, i) => 
           (<Annotation key={match + i} match={annotation.linesAnnotated} comment={annotation.comment} />)
@@ -113,24 +101,9 @@ class SinglePoem extends Component {
           result = reactStringReplace(theLyrics, annotation.linesAnnotated, (match, i) => 
           (<Annotation key={match + i} match={annotation.linesAnnotated} comment={annotation.comment} />)
           )
-        }
-        
+        }      
           
       })
-
-      console.log('result', result)
-      // theLyrics.join('')
-      
-      
-
-      // annotations.forEach((annotation) => {
-      //   const lineAnnotated = new RegExp(annotation.lineAnnotated, 'g')
-      //   theLyrics = reactStringReplace(theLyrics, new RegExp(annotation.lineAnnotated, 'gi'), (match, i) => 
-      //     <Annotation key={match + i} match={match} comment={annotation.comment} />
-      //     // <span key={i} style={{ color: 'red' }}>{match}</span>
-      //     )
-      // })
-      // this.setState({rendered: true})
     }
     
     return (
@@ -145,37 +118,7 @@ class SinglePoem extends Component {
               <div id="poem-lines" onMouseUp={e => this.selectText(e)}>
                 {
                   result
-                  
-                  
-                  // .split("\n").map((l, i, array) => {
-                  //   initCharIdx += endCharIdx
-                  //   endCharIdx += l.length 
-                  //   return <Line key={i} line={l} initCharIdx={initCharIdx} endCharIdx={endCharIdx} />
-                  /*
-                  if (
-                    i < array.length - 1 &&
-                    array[i].length > 0 &&
-                    array[i + 1].length > 0 &&
-                    array[i + 1].includes("II")
-                  ) {
-                    return (
-                      <Fragment key={i}>
-                        {" "}
-                        <span>{l}</span>
-                        <br />
-                        <span> </span>
-                        <br />{" "}
-                      </Fragment>
-                    ); //must add new row to clean up data
-                  } else {
-                    return (
-                      <Fragment key={i}>
-                        <span>{l}</span>
-                        <br />
-                      </Fragment>
-                    );
-                  }
-                */}
+                }
               </div>
               {
                 showAnnotateBtn ? <PopupNoteBox style={btnStyle} selectedText={selection} poemName={this.props.match.params.id} closeNote={this.closeNoteCpt}/> : null
