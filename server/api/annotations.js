@@ -27,9 +27,9 @@ router.post('/:poemId', async (req, res, next) => {
         const poem = req.params.poemId.split("-")
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
-        const {noteContent, selectedText} = req.body
-        const newAnnotation = await Annotation.create({poem, content: noteContent, linesAnnotated: selectedText })
-        res.status(201)
+        const {annotation, selectedText} = req.body
+        const newAnnotation = await Annotation.create({poem, content: annotation, linesAnnotated: selectedText })
+        res.status(201).json(newAnnotation)
     } catch (error) {
         next(error)
     }
