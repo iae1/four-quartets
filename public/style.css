@@ -17,6 +17,10 @@ body {
   justify-content: center;
 }
 
+hr {
+  border: dashed 1px black;
+}
+
 
 .heading-primary {
   display: flex;
@@ -45,8 +49,9 @@ nav a {
 }
 
 form div {
-  margin: 1em;
-  display: inline-block;
+  margin: 1rem;
+  width: -webkit-fill-available;
+  display: inline-grid;
 }
 
 .all-poems {
@@ -64,6 +69,7 @@ form div {
   font-size: 1.5rem;
   white-space: pre-line;
 }
+
 
 /* .navigation__background {
   background-color: #5f5980;
@@ -90,6 +96,7 @@ form div {
 
 .poem-link a:hover {
   color: #343434;
+  background-color: gainsboro;
   padding: 1rem;
 }
 
@@ -152,6 +159,7 @@ i.fa:hover {
   color: black;
   line-height: 1.5rem;
   font-size: 1rem;
+  font-style: italic;
 }
 .modal > .actions {
   width: 100%;
@@ -171,6 +179,14 @@ i.fa:hover {
   background: #ffffff;
   border-radius: 18px;
   border: 1px solid #cfcece;
+}
+
+.modal > .commentary {
+  width: 100%;
+  padding: 10px 5px;
+  color: black;
+  line-height: 1.5rem;
+  font-size: 1rem;
 }
 
 .popup-content {
@@ -198,3 +214,63 @@ i.fa:hover {
   background: transparent;
 }
 
+.note-header {
+  display: flex;
+  justify-content: center;
+  color: black;
+  font-size: 1rem;
+  border-bottom: solid 3px;
+  width: auto;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  color: black;
+  border-bottom: solid 3px;
+  width: auto;
+}
+
+.lds-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 32px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
+textarea {
+  resize: vertical;
+}
+
+.new-form {
+  border-top: dashed black 1px;
+}
