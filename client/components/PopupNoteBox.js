@@ -6,7 +6,7 @@ class PopupNoteBox extends Component {
     constructor() {
         super()
         this.state = {
-            noteContent: ""
+            annotation: ""
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,47 +20,47 @@ class PopupNoteBox extends Component {
 
     async handleSubmit(e) {
         e.preventDefault()
-        console.log('noteProps', this.props)
         const {poemName, selectedText, closeNote} = this.props
-        const {noteContent} = this.state
-        closeNote()
-        await axios.post(`/api/annotations/${poemName}`, {noteContent, selectedText})
+        const {annotation} = this.state
+        const {data} = await axios.post(`/api/annotations/${poemName}`, {annotation, selectedText})
+        closeNote(data)
     }
 
     render () {
-        const { style, selectedText, poemName } = this.props
+        const { style, selectedText } = this.props
 
         return (
-            <Popup trigger={<button style={style}> Annotate </button>} modal nested >
+            <Popup trigger={<button className="annotate-btn" style={style}> Annotate </button>} modal nested >
             {(close) => (
                 <>
                 <div className="modal">
                     <button className="close" onClick={close}>
                         &times;
                     </button>
-                <div className="header"> Annotate Below </div>
+                <div className="comment-header"> Annotate Below </div>
                     <div className="content">
                         {selectedText}
                     </div>
                 </div>
                 <div className="comment-box">
                 <form className="new-form">
-                    <div className="u-margin-bottom-medium" />
                     <div className="form__group">
-                        <input
+                        <textarea
                         name="annotation"
                         type="text"
-                        className="new-form__input"
+                        className="form-control"
                         placeholder="Write Annotation Here"
                         id="annotation"
+                        required
+                        minLength='1'
                         onChange={this.handleChange}
                         />
                     </div>
-                    <div className="form__group">
-                        <button type="submit" className="btn btn--green" onClick={this.handleSubmit}>
+                    {/* <div className="form__group"> */}
+                        <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>
                         Submit
                         </button>
-                    </div>
+                    {/* </div> */}
                 </form>
             </div>
             </>
