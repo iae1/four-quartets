@@ -5,7 +5,6 @@ import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
 import AllPoems from "./components/AllPoems";
 import SinglePoem from "./components/SinglePoem";
-import Note from "./components/NoteBox";
 import { me } from "./store";
 
 /**
@@ -33,7 +32,6 @@ class Routes extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/poems/:id/note" component={Note} />
             <Route exact path="/poems/:id" component={SinglePoem} />
             <Route exact path="/poems" component={AllPoems} />
           </Switch>

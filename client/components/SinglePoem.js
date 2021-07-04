@@ -1,15 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { fetchSinglePoem } from "../store/poems";
-import Note from "./NoteBox";
-import Line from "./Line"
 import axios from "axios";
 import Player from "./Player"
 import PopupNoteBox from "./PopupNoteBox"
-import {findAll} from  "highlight-words-core"
 import reactStringReplace from 'react-string-replace';
 import Annotation from "./Annotation"
-const replace = require('string-replace-to-array')
 
 
 class SinglePoem extends Component {
@@ -70,7 +66,6 @@ class SinglePoem extends Component {
       mouseCoordinates: { x, y },
       selection,
       annotations,
-      rendered
     } = this.state;
 
     const title = this.props.match.params.id

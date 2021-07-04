@@ -57,7 +57,7 @@ class PopupNoteBox extends Component {
                         />
                     </div>
                     {/* <div className="form__group"> */}
-                        <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>
+                        <button type="submit" className="submit-anttn-btn" onClick={this.handleSubmit}>
                         Submit
                         </button>
                     {/* </div> */}
