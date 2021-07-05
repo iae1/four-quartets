@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { requireToken, isAdmin } = require("./gateKeeping");
 
-const { models: { User, Poem, Line, Annotation } } = require("../db");
+const { models: { User, Annotation } } = require("../db");
 module.exports = router;
 
 //GET route for all users /api/users/
