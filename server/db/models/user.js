@@ -7,11 +7,6 @@ const axios = require("axios");
 const SALT_ROUNDS = 5;
 
 const User = db.define("user", {
-  username: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false
-  },
   password: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -31,16 +26,12 @@ const User = db.define("user", {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
-  // temp guestId to handle guest order information
 });
 
 module.exports = User;
 
-/**
- * instanceMethods
- */
+
 User.prototype.correctPassword = function(candidatePwd) {
-  //we need to compare the plain version to an encrypted version of the password
   return bcrypt.compare(candidatePwd, this.password);
 };
 
@@ -51,6 +42,7 @@ User.prototype.generateToken = function() {
 /**
  * classMethods
  */
+
 User.authenticate = async function({ email, password }) {
   const user = await this.findOne({ where: { email } });
   if (!user || !await user.correctPassword(password)) {
@@ -66,7 +58,7 @@ User.findByToken = async function(token) {
     const { id } = await jwt.verify(token, process.env.JWT);
     const user = User.findByPk(id);
     if (!user) {
-      throw "nooo";
+      throw "No user with this email address";
     }
     return user;
   } catch (ex) {
