@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { requireToken, isAdmin, annotRequireToken } = require("./gateKeeping");
+const { requireToken, isAdmin, annotateRequireToken } = require("./gateKeeping");
 
 const { models: { User, Poem, Line, Annotation } } = require("../db");
 module.exports = router;
@@ -22,13 +22,13 @@ router.get('/:poemId', async (req, res, next) => {
 })
 
 // POST an annotation for a given poem
-router.post('/:poemId', async (req, res, next) => {
+router.post('/:poemId', annotateRequireToken, async (req, res, next) => {
     try {
         const poem = req.params.poemId.split("-")
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
         const {annotation, selectedText} = req.body
-        const newAnnotation = await Annotation.create({poem, content: annotation, linesAnnotated: selectedText })
+        const newAnnotation = await Annotation.create({poem, content: annotation, linesAnnotated: selectedText, userId: req.user.id })
         res.status(201).json(newAnnotation)
     } catch (error) {
         next(error)
