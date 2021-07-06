@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import Popup from "reactjs-popup"
 
 class Annotation extends Component {
@@ -7,7 +7,8 @@ class Annotation extends Component {
     }
 
     render() {
-        const { match, comment, image } = this.props
+        const { match, notes } = this.props
+        console.log('notes-->', notes)
         return (
             <Popup trigger={< span className="annotated-text">{match}</ span >} modal nested >
                 {(close) => (
@@ -21,9 +22,26 @@ class Annotation extends Component {
                                 {match}
                             </div>
                             <hr />
-                            <div className="commentary">
-                                {comment}
-                            </div>
+                            {
+                                notes.map((note) => (
+                                <div className="individual-comment" key={note.id}>
+                                    <div className="author-icon">
+                                        {note.author.email[0]}
+                                    </div>
+                                    <div className="annotation-contents">
+                                    <div className="author">
+                                        {note.author.email}
+                                    </div>
+                                    <div className="time-created">
+                                        {`Written on ${new Date(note.createdAt).toLocaleDateString('en-US')} at ${new Date(note.createdAt).toLocaleTimeString('en-US')}`}
+                                    </div>
+                                    <div className="commentary">
+                                        {note.content}
+                                    </div>
+                                    </div>
+                                </div>
+                                ))
+                            }
                         </div>
                     </>
                 )}

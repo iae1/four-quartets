@@ -84,21 +84,42 @@ class SinglePoem extends Component {
 
     if (theLyrics && annotations) {
 
-      annotations.forEach((annotation, idx) => {
-        console.log(annotation)
+      // This object helps us refactor the annotation data from the backend so that multiple annotations can be given for one line
+      let memo = {}
+      annotations.forEach((annotation) => {
+        if (annotation.lineAnnotated) {
+          if (memo[annotation.lineAnnotated.id]) {
+            memo[annotation.lineAnnotated.id].push({id: annotation.id, content: annotation.content, author: annotation.user, createdAt: annotation.createdAt})
+          } else {
+            memo[annotation.lineAnnotated.id] = new Array({id: annotation.id, linesAnnotated: annotation.lineAnnotated.linesAnnotated, content: annotation.content, author: annotation.user, createdAt: annotation.createdAt})
+          }
+        }
+      })
+
+      Object.keys(memo).forEach((lineId, idx) => {
         if (idx > 0) {
-          result = reactStringReplace(result, annotation.linesAnnotated, (match, i) => 
-          (<Annotation key={annotation.id} match={annotation.linesAnnotated} comment={annotation.content} />)
+          result = reactStringReplace(result, memo[lineId][0].linesAnnotated, (match, i) => 
+          (<Annotation key={lineId} match={memo[lineId][0].linesAnnotated} notes={memo[lineId]} />)
           )
         } else {
-          result = reactStringReplace(theLyrics, annotation.linesAnnotated, (match, i) => 
-          (<Annotation key={annotation.id} match={annotation.linesAnnotated} comment={annotation.content} />)
+          result = reactStringReplace(theLyrics, memo[lineId][0].linesAnnotated, (match, i) => 
+          (<Annotation key={lineId} match={memo[lineId][0].linesAnnotated} notes={memo[lineId]} />)
           )
-        }      
-          
+        }  
       })
+      
+      // annotations.forEach((annotation, idx) => {
+      //   if (idx > 0) {
+      //     result = reactStringReplace(result, annotation.lineAnnotated.linesAnnotated, (match, i) => 
+      //     (<Annotation key={annotation.id} match={annotation.lineAnnotated.linesAnnotated} comment={annotation.content} author={annotation.user} />)
+      //     )
+      //   } else {
+      //     result = reactStringReplace(theLyrics, annotation.lineAnnotated.linesAnnotated, (match, i) => 
+      //     (<Annotation key={annotation.id} match={annotation.lineAnnotated.linesAnnotated} comment={annotation.content} author={annotation.user} />)
+      //     )
+      //   }      
+      // })
     }
-    
     return (
       <>
         <div className="single-poem">
