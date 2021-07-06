@@ -8,7 +8,6 @@ import { authenticate } from "../store/auth";
 
 const AuthForm = props => {
   const { email, displayName, handleSubmit, error, name } = props;
-  console.log("name--->", name);
   return (
     <section className="section-book">
       <div className="row">
@@ -26,18 +25,6 @@ const AuthForm = props => {
                 ) : (
                   <h2 className="heading-secondary">Login To Annotate</h2>
                 )}
-              </div>
-              <div className="form__group">
-                <input
-                  name="username"
-                  type="text"
-                  className="form__input"
-                  placeholder="Username"
-                  id="username"
-                />
-                <label htmlFor="username" className="form__label">
-                  Username
-                </label>
               </div>
               <div className="form__group">
                 <input
@@ -107,8 +94,7 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name;
       const email = evt.target.email.value;
       const password = evt.target.password.value;
-      const username = evt.target.username.value;
-      dispatch(authenticate(email, password, username, formName));
+      dispatch(authenticate(email, password, formName));
     }
   };
 };

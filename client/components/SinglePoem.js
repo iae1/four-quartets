@@ -7,7 +7,7 @@ import PopupNoteBox from "./PopupNoteBox"
 import reactStringReplace from 'react-string-replace';
 import Annotation from "./Annotation"
 
-
+const token = window.localStorage.getItem('token');
 class SinglePoem extends Component {
   constructor() {
     super();
@@ -103,8 +103,7 @@ class SinglePoem extends Component {
       <>
         <div className="single-poem">
           {!lyrics ? (
-            // <h3 className="loading-poem">Loading Poem</h3>
-            <div class="lds-hourglass"></div>
+            <div className="lds-hourglass"></div>
           ) : (
             <div className="loaded-poem">
               <h1>{title}</h1>
