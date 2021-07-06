@@ -5,8 +5,10 @@ const db = require("./db");
 const Annotation = require("./models/annotation");
 const User = require("./models/user");
 
-User.hasMany(Annotation);
-Annotation.belongsTo(User);
+User.hasMany(Annotation, { as: 'annotations' });
+Annotation.belongsTo(User, {
+  foreignKey: "userId"
+});
 
 module.exports = {
   db,
