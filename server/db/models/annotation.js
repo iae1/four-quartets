@@ -13,13 +13,6 @@ const Annotation = db.define("annotation", {
       min: 1
     }
   },
-  linesAnnotated: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-    validate: {
-      min: 5
-    }
-  },
 });
 
 module.exports = Annotation;
