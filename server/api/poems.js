@@ -4,7 +4,6 @@ const Client = new Genius.Client(); // Scrapes if no key is provided
 
 const { models: { Poem, Annotation, Line } } = require("../db");
 const {
-  requireToken,
   isAdmin,
 } = require("./gateKeeping");
 module.exports = router;
