@@ -1,4 +1,4 @@
-const { models: { User, Product, Order, OrderDetails } } = require("../db");
+const { models: { User } } = require("../db");
 
 const requireToken = async (req, res, next) => {
   try {
@@ -16,50 +16,13 @@ const annotateRequireToken = async (req, res, next) => {
     const token = req.body.token;
     const user = await User.findByToken(token);
     req.user = user;
-    next();
+    if (!user) {
+      return res.status(403).send("You are not a user");
+    } else {
+      next();
+    }
   } catch (err) {
     next(err);
-  }
-};
-
-const userCart = async (req, res, next) => {
-  try {
-    req.userCart = await Order.findOne({
-      include: Product,
-      where: {
-        userId: req.user.id.toString(),
-        order_status: "pending"
-      }
-    });
-    next();
-  } catch (err) {
-    next(err);
-  }
-};
-
-const orderDetail = async (req, res, next) => {
-  try {
-    req.orderDetail = await OrderDetails.findOne({
-      where: {
-        orderId: req.userCart.id,
-        productId: req.params.productId
-      }
-    });
-    next();
-  } catch (err) {
-    next(err);
-  }
-};
-
-const productPrice = async (req, res, next) => {
-  try {
-    const response = await Product.findByPk(req.body.id, {
-      attributes: ["price"]
-    });
-    req.productPrice = response.dataValues.price;
-    next();
-  } catch (error) {
-    console.log(error);
   }
 };
 
