@@ -24,12 +24,16 @@ class PopupNoteBox extends Component {
     }
 
     async handleSubmit(e) {
-        e.preventDefault()
-        const {poemName, selectedText, closeNote} = this.props
-        const {annotation} = this.state
-        const token = window.localStorage.getItem('token');
-        const {data} = await axios.post(`/api/annotations/${poemName}`, {annotation, selectedText, token})
-        closeNote(data)
+        try {
+            e.preventDefault()
+            const {poemName, selectedText, closeNote} = this.props
+            const {annotation} = this.state
+            const token = window.localStorage.getItem('token');
+            const {data} = await axios.post(`/api/annotations/${poemName}`, {annotation, selectedText, token})
+            closeNote(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     setRedirect () {
