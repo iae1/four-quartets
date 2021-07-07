@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { fetchSinglePoem } from "../store/poems";
 import axios from "axios";
-import Player from "./Player"
 import PopupNoteBox from "./PopupNoteBox"
 import reactStringReplace from 'react-string-replace';
 import Annotation from "./Annotation"
