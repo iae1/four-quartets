@@ -59,38 +59,38 @@ class PopupNoteBox extends Component {
                         {selectedText}
                     </div>
                 </div>
-                <div className="comment-box">
-                <form className="new-form">
-                    <div className="form__group">
-                        <textarea
-                        name="annotation"
-                        type="text"
-                        className="form-control"
-                        placeholder="Write Annotation Here"
-                        id="annotation"
-                        required
-                        minLength='1'
-                        onChange={this.handleChange}
-                        />
-                    </div>
-                        {
-                            isLoggedIn ? (
-                            <button type="submit" className="submit-anttn-btn" onClick={this.handleSubmit}>
-                                Submit
-                            </button>
-                            ) : (
-                                <>
-                                    {this.renderRedirect()}
-                                    <button type="button" className="submit-anttn-btn" onClick={this.setRedirect}>
-                                        Login to Annotate
-                                    </button>
-                                </>
-                            )
-                        }
-                        
-
-                </form>
-            </div>
+                    {
+                        isLoggedIn ? (
+                        <>
+                        <div className="comment-box">
+                            <form className="new-form">
+                                <div className="form__group">
+                                    <textarea
+                                    name="annotation"
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Write Annotation Here"
+                                    id="annotation"
+                                    required
+                                    minLength='1'
+                                    onChange={this.handleChange}
+                                    />
+                                </div>
+                            </form>
+                        </div>
+                        <button type="submit" className="submit-anttn-btn" onClick={this.handleSubmit}>
+                            Submit
+                        </button>
+                        </>
+                        ) : (
+                            <>
+                                {this.renderRedirect()}
+                                <button type="button" className="submit-anttn-btn" onClick={this.setRedirect}>
+                                    Login to Annotate
+                                </button>
+                            </>
+                        )
+                    }
             </>
             )}
             </Popup>

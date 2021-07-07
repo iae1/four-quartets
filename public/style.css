@@ -1,13 +1,6 @@
-/*
-primary-dark: #2F3061
-primary-med: #0e34a0
-primary-light: #5f5980
-
-*/
-
 
 body {
-  font-family: sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   color: gainsboro;
   background-color: #343434;
 }
@@ -21,11 +14,19 @@ hr {
   border: dashed 1px black;
 }
 
+h1 {
+  text-transform: uppercase;
+}
 
 .heading-primary {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.heading-primary-main {
+  margin-bottom: 1rem;
+  text-transform: uppercase;
 }
 
 .heading-primary-sub {
@@ -43,7 +44,7 @@ label {
 
 nav a {
   display: inline-block;
-  margin: 1em;
+  margin: 1rem;
   font-weight: bold;
   padding: 0.5rem;
 }
@@ -58,6 +59,7 @@ form div {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 10%;
 }
 
 .loaded-poem {
@@ -75,7 +77,11 @@ form div {
   background-color: #5f5980;
 } */
 .navigation__nav {
-  background-color: #5f5980;
+  background-color: rgb(114, 20, 4);
+  display: flex;
+  justify-content: space-evenly;
+  border-radius: 5px;
+  text-transform: uppercase;
 
 }
 .navigation__link {
@@ -98,6 +104,7 @@ form div {
   color: #343434;
   background-color: gainsboro;
   padding: 1rem;
+  font-style: italic;
 }
 
 .annotated-text {
@@ -182,13 +189,13 @@ i.fa:hover {
   border: 1px solid #cfcece;
 }
 
-.modal > .commentary {
+/* .modal > .commentary {
   width: 100%;
   padding: 10px 5px;
   color: black;
   line-height: 1.5rem;
   font-size: 1rem;
-}
+} */
 
 .popup-content {
   margin: auto;
@@ -235,19 +242,20 @@ i.fa:hover {
 
 .lds-hourglass {
   display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-  display: flex;
-  justify-content: center;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
 }
 
 .lds-hourglass:after {
   content: " ";
   display: block;
   border-radius: 50%;
-  width: 0;
-  height: 0;
+  width: 100px;
+  height: 100px;
   margin: 8px;
   box-sizing: border-box;
   border: 32px solid #fff;
@@ -278,19 +286,19 @@ textarea {
 
 .annotate-btn {
   display:inline-block;
-padding:0.46em 1.6em;
-border:0.1em solid #000000;
-margin:0 0.2em 0.2em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color:#000000;
-text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
-background-color:#FFFFFF;
-text-align:center;
-transition: all 0.15s;
+  padding:0.46em 1.6em;
+  border:0.1em solid #000000;
+  margin:0 0.2em 0.2em 0;
+  border-radius:0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  color:#000000;
+  text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+  background-color:#FFFFFF;
+  text-align:center;
+  transition: all 0.15s;
 }
 
 .annotate-btn:hover {
@@ -335,7 +343,71 @@ transition: all 0.15s;
    .submit-anttn-btn {
     display:block;
     margin:0.4em auto;
-  }
+  };
 }
 
+.author-icon {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  background-color: #bbb;
+  border-radius: 50%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
 
+.individual-comment {
+  display: flex;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgb(226, 226, 226);
+}
+
+.annotation-contents {
+  padding-left: 0.5rem;
+}
+
+.time-created {
+  padding-bottom: 0.75rem;
+  font-size: 0.9rem;
+  color: #bbb;
+}
+
+.author {
+  color: black;
+  font-size: 1rem;
+  font-weight: 900;
+  padding-bottom: 0.1rem;
+}
+
+.commentary {
+  color: black;
+  font-size: 1rem;
+}
+
+.audio-player {
+  position: fixed;
+  bottom: 4rem;
+}
+
+.text-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 42%;
+  left: 30%;
+  margin: -25px 0 0 -25px;
+  background-color: #343;
+  box-shadow: 12px 12px 2px 1px rgb(114 20 4 / 46%);
+  padding: 3rem;
+  border-radius: 10px;
+}
+
+.background-image {
+  position: absolute;
+  top: -10rem;
+  left: -10rem;
+  z-index: -1;
+}
