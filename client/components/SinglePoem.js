@@ -6,6 +6,7 @@ import Player from "./Player"
 import PopupNoteBox from "./PopupNoteBox"
 import reactStringReplace from 'react-string-replace';
 import Annotation from "./Annotation"
+import ReactAudioPlayer from 'react-audio-player';
 
 const token = window.localStorage.getItem('token');
 class SinglePoem extends Component {
@@ -99,27 +100,16 @@ class SinglePoem extends Component {
       Object.keys(memo).forEach((lineId, idx) => {
         if (idx > 0) {
           result = reactStringReplace(result, memo[lineId][0].linesAnnotated, (match, i) => 
-          (<Annotation key={lineId} match={memo[lineId][0].linesAnnotated} notes={memo[lineId]} />)
+          (<Annotation key={lineId} selectedText={memo[lineId][0].linesAnnotated} notes={memo[lineId]} poemName={this.props.match.params.id} closeNote={this.closeNoteCpt} />)
           )
         } else {
           result = reactStringReplace(theLyrics, memo[lineId][0].linesAnnotated, (match, i) => 
-          (<Annotation key={lineId} match={memo[lineId][0].linesAnnotated} notes={memo[lineId]} />)
+          (<Annotation key={lineId} selectedText={memo[lineId][0].linesAnnotated} notes={memo[lineId]} poemName={this.props.match.params.id} closeNote={this.closeNoteCpt} />)
           )
-        }  
+        } 
       })
-      
-      // annotations.forEach((annotation, idx) => {
-      //   if (idx > 0) {
-      //     result = reactStringReplace(result, annotation.lineAnnotated.linesAnnotated, (match, i) => 
-      //     (<Annotation key={annotation.id} match={annotation.lineAnnotated.linesAnnotated} comment={annotation.content} author={annotation.user} />)
-      //     )
-      //   } else {
-      //     result = reactStringReplace(theLyrics, annotation.lineAnnotated.linesAnnotated, (match, i) => 
-      //     (<Annotation key={annotation.id} match={annotation.lineAnnotated.linesAnnotated} comment={annotation.content} author={annotation.user} />)
-      //     )
-      //   }      
-      // })
     }
+
     return (
       <>
         <div className="single-poem">
@@ -131,16 +121,18 @@ class SinglePoem extends Component {
               <h3>By T.S. Eliot</h3>
               <div id="poem-lines" onMouseUp={e => this.selectText(e)}>
                 {
-                  result
+                  result ?
+                  result :
+                  theLyrics
                 }
               </div>
               {
                 showAnnotateBtn ? <PopupNoteBox style={btnStyle} selectedText={selection} poemName={this.props.match.params.id} closeNote={this.closeNoteCpt}/> : null
               }
+              <ReactAudioPlayer src={`../assets/${this.props.match.params.id}.wav`} controls className="audio-player" />
             </div>
           )}
         </div>
-        <Player trackName={this.props.match.params.id} />
       </>
     );
   }
