@@ -13,7 +13,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             Home
           </Link>
           <Link to="/poems" className="navigation__link">
-            Poems
+            The Quartets
           </Link>
           <Link to="#" onClick={handleClick} className="navigation__link">
             Logout
