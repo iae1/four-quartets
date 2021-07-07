@@ -28,15 +28,19 @@ class SinglePoem extends Component {
   }
 
   async componentDidMount() {
-    const id = this.props.match.params.id;
+    try {
+      const id = this.props.match.params.id;
 
-    // Get poem lyrics from Genius API
-    const lyrics = await axios.get(`/api/poems/${id}`)
+      // Get poem lyrics from Genius API
+      const lyrics = await axios.get(`/api/poems/${id}`)
 
-    // Get all annotations that have been made on this poem from DB
-    const annotations = await axios.get(`/api/annotations/${id}`)
+      // Get all annotations that have been made on this poem from DB
+      const annotations = await axios.get(`/api/annotations/${id}`)
 
-    this.setState({ lyrics: lyrics.data, annotations: annotations.data });
+      this.setState({ lyrics: lyrics.data, annotations: annotations.data });
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   selectText(e) {
