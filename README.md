@@ -9,6 +9,13 @@
 
 Four Quartets Genius is a web app modeled off of the popular [Genius](https://genius.com/) site, but built specifically for T.S. Eliot's magisterial set of poems  _Four Quartets_. The poem is notoriously obscure and users will enjoy learning from commentary posted by others. If they are so inclined, users can sign up and comment on their favorite lines of the poem as well. The app is built using ReactJS, HTML, CSS, Redux, Express, Sequelize, and PostgreSQL. 
 
+## See it in action
+![alt-text](https://github.com/iae1/four-quartets/public/assets/home-page-image.png)
+
+![alt-text](https://github.com/iae1/four-quartets/public/assets/burnt-norton-vid.gif)
+
+![alt-text](https://github.com/iae1/four-quartets/public/assets/east-coker-vid.gif)
+
 ## Getting started
 
 1. Fork and clone this repo.
