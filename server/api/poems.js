@@ -10,7 +10,6 @@ module.exports = router;
 
 // GET single poem from the rap genius api /api/poems/:id
 router.get("/:id", async (req, res, next) => {
-  
   try {
     const title = req.params.id
       .split("-")
