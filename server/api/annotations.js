@@ -55,12 +55,38 @@ router.post('/:poemId', annotateRequireToken, async (req, res, next) => {
     }
 })
 
-//DELETE annotation /api/annotations/:id
-// router.delete('/:id', async (req, res, next) => {
-//   try {
-//     const deletedNote = await Annotation.findByPk(req.params.id)
+// GET all annotations written by a specific user
+router.get(':userId', async (req, res, next) => {
+    try {
+        const userSpecificAnotations = await Annotation.findAll({
+            where: {
+                userId: req.params.userId
+            },
+            include: [{
+                model: User,
+                attributes: ["id", "email"]
+            }, {
+                model: LineAnnotated,
+                attributes: ["id", "linesAnnotated"]
+            }]
+        })
+        res.json(userSpecificAnotations)
+    } catch (error) {
+        next(error)
+    }  
+})
 
-//   } catch (error) {
-
-//   }
-// })
+// DELETE specific annotation
+router.delete('/:noteId', async (req, res, next) => {
+  try {
+    const toBeDeletedNote = await Annotation.findByPk(req.params.noteId)
+    const toBeDeletedLine = await LineAnnotated.findByPk(toBeDeletedNote.lineId)
+    if (toBeDeletedLine.length === 1) {
+        await LineAnnotated.destroy(toBeDeletedNote.lineId)
+    }
+    const deletedNote = await Annotation.destroy(req.params.noteId)
+    res.json(deletedNote)
+  } catch (error) {
+    next(error)
+  }
+})
