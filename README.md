@@ -9,5 +9,11 @@
 
 Four Quartets Genius is a web app modeled off of the popular [Genius](https://genius.com/) site, but built specifically for T.S. Eliot's magisterial set of poems  _Four Quartets_. The poem is notoriously obscure and users will enjoy learning from commentary posted by others. If they are so inclined, users can sign up and comment on their favorite lines of the poem as well. The app is built using ReactJS, HTML, CSS, Redux, Express, Sequelize, and PostgreSQL. 
 
-## Using the app
-Clone the repository to your local machine and `npm install` on your command line. To get the database going `npm run seed`. Then, to get the app going on localhost, `npm run start-dev`.
+## Getting started
+
+1. Fork and clone this repo.
+2. `npm install`.
+3. Create `four-quartets` database.
+4. Start the build process and your application with: `npm run start-dev`. If you're using Windows, you may need to execute npm run start-server and npm run build-watch separately (in their own terminal tabs).
+5. Navigate to `localhost:8080` to see the site in the browser.
+6. Check out the starting seed file in `seed.js` - you can run it by executing `npm run seed`. You will need to seed the database once you've set up the Sequelize models.
