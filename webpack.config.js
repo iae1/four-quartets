@@ -22,7 +22,19 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
-      }
+      },
+      {
+        test: /\.sass$/,
+        loader: 'style-loader'
+      },
+      {
+        test: /\.less$/,
+        loader: 'less-loader'
+      },
+      {
+        test: /\.css$/,
+        loader: 'css-loader'
+      },
     ]
   }
 }
