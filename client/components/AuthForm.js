@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { authenticate } from "../store/auth";
+import { Form, Button } from 'react-bootstrap'
 
 /**
  * COMPONENT
@@ -9,58 +10,35 @@ import { authenticate } from "../store/auth";
 const AuthForm = props => {
   const { email, displayName, handleSubmit, error, name } = props;
   return (
-    <section className="section-book">
-      <div className="row">
-        <div className="book">
-          <div className="book__form">
-            <form
-              onSubmit={evt => handleSubmit(evt)}
-              email={email}
-              name={name}
-              className="form"
-            >
-              <div className="u-margin-bottom-medium">
-                {name !== "login" ? (
-                  <h2 className="heading-secondary">Sign Up To Annotate</h2>
-                ) : (
-                  <h2 className="heading-secondary">Login To Annotate</h2>
-                )}
-              </div>
-              <div className="form__group">
-                <input
-                  name="email"
-                  type="email"
-                  className="form__input"
-                  placeholder="Email"
-                  id="email"
-                />
-                <label htmlFor="email" className="form__label">
-                  Email address
-                </label>
-              </div>
-              <div className="form__group">
-                <input
-                  name="password"
-                  type="password"
-                  className="form__input"
-                  placeholder="Password"
-                  id="password"
-                />
-                <label htmlFor="password" className="form__label">
-                  Password
-                </label>
-              </div>
-              <div className="form__group">
-                <button type="submit" className="btn btn--green">
-                  {displayName}
-                </button>
-              </div>
-              {error && error.response && <div> {error.response.data} </div>}
-            </form>
+        <Form
+          onSubmit={evt => handleSubmit(evt)}
+          email={email}
+          name={name}
+          className="form"
+        >
+          <div className="u-margin-bottom-medium">
+            {name !== "login" ? (
+              <h2 className="heading-secondary">Sign Up To Annotate</h2>
+            ) : (
+              <h2 className="heading-secondary">Login To Annotate</h2>
+            )}
           </div>
-        </div>
-      </div>
-    </section>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" placeholder="Password" />
+          </Form.Group>
+            <Button type="submit" variant="primary" className="btn-primary">
+              {displayName}
+            </Button>{' '}
+          {error && error.response && <div> {error.response.data} </div>}
+    </Form>
   );
 };
 
